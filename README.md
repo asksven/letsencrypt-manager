@@ -3,6 +3,8 @@
 This project offers an easy way to have Let's Encrypt certificates generated and maitained for any internet-facing app. This comes-in handy if you don't have an ingress controller that manages SSL certificates for you, or if you are deploying an ingress with a hostname that can not be managed by your ingress controller.
 We use http-01 for fifilling the challenge.
 
+For requesting/updating certificates and maintain the TLS secret this project makes use of [letsencrypt-manager-certbot](https://github.com/asksven/letsencrypt-manager-certbot)
+
 See also:
 - https://github.com/staticfloat/docker-nginx-certbot
 
