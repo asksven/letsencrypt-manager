@@ -1,0 +1,15 @@
+hostname: some.fqdn.bar
+project: status
+ingress:
+  class: traefik
+  name: somename
+service:
+  name: some-svc
+  port: 80
+deployment: some-deployment
+certbot:
+  test: 0
+  email: user@foo.bar
+resources:
+  certPvc: 500Mi
+

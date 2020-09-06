@@ -1,0 +1,4 @@
+ops/setenv
+ops/manifests/.generated
+ops/certs
+ops/variables/status-prd.yaml

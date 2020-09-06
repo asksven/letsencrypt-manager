@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: certbot-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: certbot-manager
+rules:
+  - apiGroups: ["*"]
+    resources: ["deployments", "secrets"]
+    verbs: ["patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: manage-certs
+subjects:
+  - kind: ServiceAccount
+    name: certbot-sa
+roleRef:
+  kind: Role
+  name: certbot-manager
+  apiGroup: rbac.authorization.k8s.io    
