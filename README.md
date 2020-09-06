@@ -1,4 +1,4 @@
-# Let's ecnrypt manager
+# Let's encrypt manager
 
 This project offers an easy way to have Let's Encrypt certificates generated and maitained for any internet-facing app. This comes-in handy if you don't have an ingress controller that manages SSL certificates for you, or if you are deploying an ingress with a hostname that can not be managed by your ingress controller.
 We use http-01 for fifilling the challenge.
