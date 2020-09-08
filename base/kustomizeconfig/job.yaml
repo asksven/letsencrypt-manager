@@ -1,0 +1,4 @@
+images:
+- path: spec/template/spec/containers/image
+  kind: Job
+  version: v1  

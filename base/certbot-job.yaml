@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: certbot-job
+  labels:
+    app: letsencrypt
+spec:
+  template:
+    metadata:
+      name: letsencrypt
+      labels:
+        app: letsencrypt
+    spec:
+      serviceAccountName: certbot-sa
+      containers:
+      - image: certbot-image
+        imagePullPolicy: Always
+        name: certbot-job
+        ports:
+        - name: http
+          containerPort: 80
+        env:
+        - name: DOMAINS
+          value: myname.mydomain.com
+        - name: EMAIL
+          value: myemail@mydomain.com
+        - name: SECRET
+          value: myprojectsecret
+        - name: TEST_CERT
+          value: "0"
+        - name: RENEW
+          value: "0"
+        volumeMounts:
+        - mountPath: /letsencrypt
+          name: cert-volume
+      volumes:
+        - name: cert-volume
+          persistentVolumeClaim:
+            claimName: cert-pvc
+      restartPolicy: Never

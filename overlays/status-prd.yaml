@@ -1,0 +1,15 @@
+hostname: status.asksven.io
+project: status
+ingress:
+  class: traefik
+  name: status
+service:
+  name: nginx-svc
+  port: 80
+deployment: nginx-deployment
+certbot:
+  test: 0
+  email: sven.knispel@gmail.com
+resources:
+  certPvc: 500Mi
+

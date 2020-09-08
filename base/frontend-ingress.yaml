@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myproject
+spec:
+  rules:
+  - host: myname.mydomain.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: target-svc
+          servicePort: 80
+      - path: /.well-known
+        backend:
+          serviceName: certbot-svc
+          servicePort: 80
+  tls:
+  - hosts: 
+    - myname.mydomain.com
+    secretName: myprojectsecret 

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ project }}-cert-pvc
+  name: cert-pvc
   labels:
-    app: {{ project }}-letsencrypt
+    app: letsencrypt
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ resources.certPvc }}
+      storage: 500Mi

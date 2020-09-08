@@ -1,0 +1,3 @@
+images:
+- path: spec/jobTemplate/spec/template/spec/containers/image
+  kind: CronJob

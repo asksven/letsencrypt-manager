@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: certbot-cronjob
+spec:
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: letsencrypt
+        spec:
+          containers:
+          - image: certbot-image
+            imagePullPolicy: Always
+            env:
+            - name: DOMAINS
+              value: myname.mydomain.com
+            - name: EMAIL
+              value: myemail@mydomain.com
+            - name: SECRET
+              value: myprojectsecret
+            - name: TEST_CERT
+              value: "0"
+            - name: RENEW
+              value: "1"
+            name: certbot-cronjob
+            volumeMounts:
+            - mountPath: /letsencrypt
+              name: myproject-cert-volume
+          volumes:
+          - name: cert-volume
+            persistentVolumeClaim:
+              claimName: cert-pvc
+          restartPolicy: Never
+  schedule: 0 3 * * *
+  suspend: false

@@ -1,0 +1,66 @@
+resources:
+- certbot-cronjob.yaml
+- certbot-job.yaml
+- certbot-pvc.yaml
+- certbot-service.yaml
+- frontend-ingress.yaml
+
+namespace: my-namespace
+
+namePrefix: demo-
+
+commonLabels:
+  app: demo 
+
+images:
+- name: certbot-image
+  newName: asksven/certbot
+  newTag: v17
+
+# Replace hostname
+patches:
+- patch: |-
+    - op: replace
+      path: "/spec/rules/0/host"
+      value: "demo.asksven.io"
+  target:
+    kind: Ingress
+
+# Replace storage claim request
+- patch: |-
+    - op: replace
+      path: "/spec/resources/requests/storage"
+      value: "100Mi"
+  target:
+    kind: PersistentVolumeClaim
+
+# Replace cronjob schedule
+patches:
+- patch: |-
+    - op: replace
+      path: "/spec/schedule"
+      value: "0 1 * * *"
+  target:
+    kind: CronJob
+
+# Replace target service
+# !!! service name must be consistent with name-prefix
+patches:
+- patch: |-
+    - op: replace
+      path: "/spec/rules/0/http/paths/0/backend/serviceName"
+      value: "another-service"
+    - op: replace
+      path: "/spec/rules/0/http/paths/0/backend/servicePort"
+      value: "8080"
+    - op: replace
+      path: "/spec/rules/0/http/paths/1/backend/serviceName"
+      value: "demo-certbot-svc"
+
+  target:
+    kind: Ingress
+
+
+configurations:
+- kustomizeconfig/cronjob.yaml
+- kustomizeconfig/job.yaml
